@@ -1,6 +1,6 @@
 import React from "react";
 
-const Description = ({ title, statement, constraints, examples }) => {
+const Description = ({ title, statement, constraints, example }) => {
   return (
     <div className="w-full max-w-4xl mx-auto bg-[#1e1e1e] shadow-md rounded-lg p-6 overflow-y-auto">
       {/* Title */}
@@ -13,10 +13,10 @@ const Description = ({ title, statement, constraints, examples }) => {
       </div>
 
       {/* Examples */}
-      {examples?.length > 0 && (
+      {example?.length > 0 && (
         <div className="mb-6">
           <h2 className="text-lg font-semibold mb-2">Examples</h2>
-          {examples.map((ex, idx) => (
+          {example.map((ex, idx) => (
             <div
               key={idx}
               className="bg-[#373333] border rounded-2xl p-3 mb-3 text-sm"

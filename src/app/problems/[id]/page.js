@@ -44,10 +44,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // import chaiTheme from "./chai-theme.js";
 import Link from "next/link";
+import { axiosInstance } from "@/lib/axios";
 
 const Page = () => {
-  const monaco = useMonaco();
-  const problemData = {
+  let dummyData = {
     title: "Two Sum",
     statement:
       "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.",
@@ -70,20 +70,19 @@ const Page = () => {
     ],
   };
 
-  // useEffect(() => {
-  //   console.log(chaiTheme)
-  //   if (monaco) {
-  //     monaco.editor.defineTheme("dark-chai-theme", chaiTheme)
-  //   }
-  // },[monaco])
-
+  const [code, setCode] = useState("");
+  const [language, setLanguage] = useState("JAVA");
   const {
     problem,
     getProblemDetails,
     isCodeRunning,
     isCodeSubmitting,
-    runCode,
+    executeCode,
     submitCode,
+    isProblemLoading,
+    codeExecutionOutput,
+    codeSubmissionOutput,
+    getSubmisions,
   } = useProblemStore();
 
   const params = useParams();
@@ -91,19 +90,59 @@ const Page = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    getProblemDetails(problemId);
+  }, []);
+
+  const [editorValue, setEditorValue] = useState("");
+  useEffect(() => {
+    if (problem) {
+      const arrayToObject = (arr) => {
+        return arr.reduce((acc, curr) => {
+          acc[curr.language] = curr.code;
+          return acc;
+        }, {});
+      };
+      const allCodeSnippets = arrayToObject(problem.codeSnippet);
+
+      setEditorValue(allCodeSnippets[language]);
+    }
+  }, [problem, language]);
+
+  // useEffect(() => {
+  //   setProblemData(problem)
+  // },[])
+
   // useEffect(() => {
   //   getProblemDetails(problemId);
   //   if (!problem) router.push("/problems");
   // }, [getProblemDetails, problemId, problem, router]);
 
-  const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("java");
   const handleSubmit = async () => {
-    submitCode("le randi ke");
+    const data = {
+      code,
+      problemId,
+      language,
+    };
+    await submitCode(data);
+    console.log("Response after executing code: ", codeSubmissionOutput);
   };
+
   const handleRun = async () => {
-    runCode("le randi ke");
+    const data = {
+      code,
+      problemId,
+      language
+    };
+    await executeCode(data);
+    console.log("Response after executing code: ", codeExecutionOutput );
   };
+
+  const openSubmission = async () => {
+    console.log("chal rha ha open submission function !!")
+    await getSubmisions(problemId)
+    
+  }
 
   return (
     <div className="flex flex-col  h-fit w-fit overflow-hidden">
@@ -199,7 +238,16 @@ const Page = () => {
             defaultSize={40}
             className="border-2  rounded-3xl h-full w-full  bg-[#1e1e1e]"
           >
-            <Tabs defaultValue="description" className="mt-2">
+            <Tabs
+              defaultValue="description"
+              className="mt-2"
+              onValueChange={(value) => {
+                if (value === "submission") {
+                  openSubmission(); // 👈 ye tera function chalega jab submission tab click hoga
+                }
+              }}
+              
+            >
               <TabsList className="flex space-x-8 w-full pl-1">
                 <TabsTrigger value="description">
                   <Image
@@ -230,7 +278,7 @@ const Page = () => {
               </TabsList>
               <TabsContent value="description">
                 <ScrollArea className=" h-170 rounded-md border p-2">
-                  <Description {...problemData} />
+                  <Description {...problem} />
                 </ScrollArea>
               </TabsContent>
               <TabsContent value="editorial" className="bg-black">
@@ -281,7 +329,7 @@ const Page = () => {
                 className="border-2 rounded-3xl bg-[#1e1e1e]"
               >
                 <Select
-                  defaultValue="java"
+                  defaultValue="JAVA"
                   onValueChange={(value) => setLanguage(value)}
                 >
                   <SelectTrigger className="ml-3 mt-1">
@@ -290,36 +338,39 @@ const Page = () => {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Language</SelectLabel>
-                      <SelectItem value="javascript">Javascript</SelectItem>
-                      <SelectItem value="java">Java</SelectItem>
-                      <SelectItem value="python">Python</SelectItem>
+                      <SelectItem value="JAVASCRIPT">Javascript</SelectItem>
+                      <SelectItem value="JAVA">Java</SelectItem>
+                      <SelectItem value="PYTHON">Python</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Separator className="bg-gray-500" />
-
-                <Editor
-                  className=" h-full"
-                  height="100%"
-                  language={language.toLowerCase()}
-                  theme="vs-dark"
-                  value={code}
-                  onChange={(value) => setCode(value || "")}
-                  options={{
-                    minimap: { enabled: false },
-                    fontSize: 20,
-                    lineNumbers: "on",
-                    roundedSelection: false,
-                    scrollBeyondLastLine: false,
-                    readOnly: false,
-                    automaticLayout: true,
-                    cursorStyle: "line",
-                    cursorBlinking: "expand",
-                    cursorSmoothCaretAnimation: true,
-                    contextmenu: false,
-                  }}
-                  defaultLanguage="java"
-                />
+                {isProblemLoading ? (
+                  ""
+                ) : (
+                  <Editor
+                    className=" h-full"
+                    height="100%"
+                    language={language.toLowerCase()}
+                    theme="vs-dark"
+                    value={editorValue}
+                    onChange={(value) => setCode(value || "")}
+                    options={{
+                      minimap: { enabled: false },
+                      fontSize: 13,
+                      lineNumbers: "on",
+                      roundedSelection: false,
+                      scrollBeyondLastLine: false,
+                      readOnly: false,
+                      automaticLayout: true,
+                      cursorStyle: "line",
+                      cursorBlinking: "expand",
+                      cursorSmoothCaretAnimation: true,
+                      contextmenu: false,
+                    }}
+                    defaultLanguage="java"
+                  />
+                )}
               </ResizablePanel>
               <ResizableHandle className="bg-transparent" />
               {/* <Separator className="bg-gray-600" /> */}
