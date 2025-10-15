@@ -44,34 +44,22 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // import chaiTheme from "./chai-theme.js";
 import Link from "next/link";
-import { axiosInstance } from "@/lib/axios";
+import Submission from "./Submission";
+import { toast } from "sonner";
+import RunCodeResults from "./RunCodeResults";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Page = () => {
-  let dummyData = {
-    title: "Two Sum",
-    statement:
-      "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.",
-    constraints: [
-      "2 <= nums.length <= 10^4",
-      "-10^9 <= nums[i] <= 10^9",
-      "-10^9 <= target <= 10^9",
-      "Only one valid answer exists.",
-    ],
-    examples: [
-      {
-        input: "nums = [2,7,11,15], target = 9",
-        output: "[0,1]",
-        explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
-      },
-      {
-        input: "nums = [3,2,4], target = 6",
-        output: "[1,2]",
-      },
-    ],
-  };
-
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("JAVA");
+  const [openSubmissionDialog, setOpenSubmissionDialog] = useState(false);
   const {
     problem,
     getProblemDetails,
@@ -80,9 +68,11 @@ const Page = () => {
     executeCode,
     submitCode,
     isProblemLoading,
-    codeExecutionOutput,
-    codeSubmissionOutput,
+    runCodeResults,
+    submitCodeResults,
     getSubmisions,
+    submissions,
+    areSubmissionsLoading,
   } = useProblemStore();
 
   const params = useParams();
@@ -92,7 +82,7 @@ const Page = () => {
 
   useEffect(() => {
     getProblemDetails(problemId);
-  }, []);
+  }, [problemId, getProblemDetails]);
 
   const [editorValue, setEditorValue] = useState("");
   useEffect(() => {
@@ -109,43 +99,57 @@ const Page = () => {
     }
   }, [problem, language]);
 
-  // useEffect(() => {
-  //   setProblemData(problem)
-  // },[])
-
-  // useEffect(() => {
-  //   getProblemDetails(problemId);
-  //   if (!problem) router.push("/problems");
-  // }, [getProblemDetails, problemId, problem, router]);
+  const handleRun = async () => {
+    if (!code) {
+      toast("please write some code to run 😅");
+      return;
+    }
+    const data = {
+      code,
+      problemId,
+      language,
+    };
+    await executeCode(data);
+    console.log("Response after executing code: ", runCodeResults);
+  };
 
   const handleSubmit = async () => {
+    if (!code) {
+      toast("please write some code to submit 😅");
+      return;
+    }
     const data = {
       code,
       problemId,
       language,
     };
     await submitCode(data);
-    console.log("Response after executing code: ", codeSubmissionOutput);
-  };
-
-  const handleRun = async () => {
-    const data = {
-      code,
-      problemId,
-      language
-    };
-    await executeCode(data);
-    console.log("Response after executing code: ", codeExecutionOutput );
+    console.log("Response after executing code: ", submitCodeResults);
+    setOpenSubmissionDialog(true)
   };
 
   const openSubmission = async () => {
-    console.log("chal rha ha open submission function !!")
-    await getSubmisions(problemId)
-    
-  }
+    console.log("chal rha ha open submission function !!");
+    await getSubmisions(problemId);
+  };
 
   return (
     <div className="flex flex-col  h-fit w-fit overflow-hidden">
+      <Dialog
+          open={openSubmissionDialog}
+          onOpenChange={setOpenSubmissionDialog}
+        >
+          <DialogTrigger></DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       {/* upar waala  */}
       <div className="flex items-center justify-between   pt-3 pb-4 ">
         {/* logo waala */}
@@ -243,10 +247,9 @@ const Page = () => {
               className="mt-2"
               onValueChange={(value) => {
                 if (value === "submission") {
-                  openSubmission(); // 👈 ye tera function chalega jab submission tab click hoga
+                  openSubmission();
                 }
               }}
-              
             >
               <TabsList className="flex space-x-8 w-full pl-1">
                 <TabsTrigger value="description">
@@ -305,7 +308,15 @@ const Page = () => {
                   </div>
                 </div>
               </TabsContent>
-              <TabsContent value="submission">submission</TabsContent>
+              <TabsContent value="submission">
+                {areSubmissionsLoading ? (
+                  <div className="flex justify-center items-center">
+                    <LoaderFour text="loading submissions" />
+                  </div>
+                ) : (
+                  <Submission submissions={submissions} />
+                )}
+              </TabsContent>
               <TabsContent value="solutions">solutions</TabsContent>
             </Tabs>
           </ResizablePanel>
@@ -353,6 +364,7 @@ const Page = () => {
                     height="100%"
                     language={language.toLowerCase()}
                     theme="vs-dark"
+                    defaultValue={code}
                     value={editorValue}
                     onChange={(value) => setCode(value || "")}
                     options={{
@@ -378,42 +390,34 @@ const Page = () => {
                 defaultSize={40}
                 className=" border-2 rounded-2xl  bg-[#1e1e1e]"
               >
-                <Tabs defaultValue="testCase" className="ml-2 mt-2 ">
-                  <TabsList className="space-x-4 ">
+                <Tabs defaultValue="testCaseResult" className="w-[400px]">
+                  <TabsList>
                     <TabsTrigger value="testCase">
+                      {" "}
                       <Image
                         src={"/testCheckBox.svg"}
                         alt=""
                         height={10}
                         width={15}
-                      />
-                      Testcase
-                    </TabsTrigger>
+                      />{" "}
+                      Testcase{" "}
+                    </TabsTrigger>{" "}
                     <TabsTrigger value="testCaseResult">
+                      {" "}
                       <Image
                         src={"/testResult.svg"}
                         alt=""
                         height={10}
                         width={17}
-                      />
-                      Test Result
+                      />{" "}
+                      Test Result{" "}
                     </TabsTrigger>
                   </TabsList>
-                  <Separator className="bg-gray-400" />
-
                   <TabsContent value="testCase">
-                    {" "}
-                    <Tabs defaultValue="case1">
-                      <TabsList className="space-x-4">
-                        <TabsTrigger value="case1">Case 1</TabsTrigger>
-                        <TabsTrigger value="case2">Case 2</TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="case1">case1</TabsContent>
-                      <TabsContent value="case2">case2</TabsContent>
-                    </Tabs>
+                    will render later bc !!!
                   </TabsContent>
                   <TabsContent value="testCaseResult">
-                    testCaseResult
+                    <RunCodeResults results={runCodeResults?.data} />
                   </TabsContent>
                 </Tabs>
               </ResizablePanel>

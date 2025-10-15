@@ -12,10 +12,10 @@ export const useProblemStore = create((set) => ({
   isCodeSubmitting: false,
   problem: null,
   isProblemLoading: false,
-  codeExecutionOutput: null,
-  codeSubmissionOutput: null,
+  runCodeResults: null,
+  submitCodeResults: null,
   submissions: null,
-  isSubmissionsLoading: false,
+  areSubmissionsLoading: false,
 
   executeCode: async (data) => {
     set({ isCodeRunning: true });
@@ -25,10 +25,10 @@ export const useProblemStore = create((set) => ({
         data
       );
 
-      set({ codeExecutionOutput: response.data });
+      set({ runCodeResults: response.data });
     } catch (error) {
       console.log("Error running the code: ", error.message);
-      set({ codeExecutionOutput: null });
+      set({ runCodeResults: null });
       set({ isCodeRunning: false });
     } finally {
       set({ isCodeRunning: false });
@@ -43,11 +43,11 @@ export const useProblemStore = create((set) => ({
         data
       );
 
-      set({ codeSubmissionOutput: response.data });
+      set({ submitCodeResults: response.data });
     } catch (error) {
       console.log("Error running the code: ", error.message);
       set({ isCodeSubmitting: false });
-      set({ codeSubmissionOutput: null });
+      set({ submitCodeResults: null });
     } finally {
       set({ isCodeSubmitting: false });
     }
@@ -68,18 +68,18 @@ export const useProblemStore = create((set) => ({
   },
 
   getSubmisions: async (problemId) => {
-    try {
-      set({ isSubmissionsLoading: true });
 
+    try {
+      set({ areSubmissionsLoading: true });
       const response = await axiosInstance.get(`/submission/${problemId}`)
-      console.log("Submissions fetched successfully!!")
-      set({submissions:response.data})
+      console.log("Submissions fetched successfully!!: ", response.data)
+      set({submissions:response.data.data})
     } catch (error) {
       console.log("failed to fetch the submissions: ", error.message)
       set({submissions:null})
-      set({ isSubmissionsLoading: false });
+      set({ areSubmissionsLoading: false });
     } finally {
-      set({ isSubmissionsLoading: false });
+      set({ areSubmissionsLoading: false });
 
     }
   },
