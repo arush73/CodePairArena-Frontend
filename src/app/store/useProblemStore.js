@@ -16,6 +16,7 @@ export const useProblemStore = create((set) => ({
   submitCodeResults: null,
   submissions: null,
   areSubmissionsLoading: false,
+  areProblemsLoading: false,
 
   executeCode: async (data) => {
     set({ isCodeRunning: true });
@@ -68,19 +69,31 @@ export const useProblemStore = create((set) => ({
   },
 
   getSubmisions: async (problemId) => {
-
     try {
       set({ areSubmissionsLoading: true });
-      const response = await axiosInstance.get(`/submission/${problemId}`)
-      console.log("Submissions fetched successfully!!: ", response.data)
-      set({submissions:response.data.data})
+      const response = await axiosInstance.get(`/submission/${problemId}`);
+      console.log("Submissions fetched successfully!!: ", response.data);
+      set({ submissions: response.data.data });
     } catch (error) {
-      console.log("failed to fetch the submissions: ", error.message)
-      set({submissions:null})
+      console.log("failed to fetch the submissions: ", error.message);
+      set({ submissions: null });
       set({ areSubmissionsLoading: false });
     } finally {
       set({ areSubmissionsLoading: false });
+    }
+  },
 
+  getAllProblems: async () => {
+    try {
+      set({ areProblemsLoading: true });
+      const response = await axiosInstance.get("/problem");
+
+      set({allLoadedProblems: response.data.data})
+    } catch (error) {
+      console.log("Something went wrong while fetching the problems!!: ",error.message)
+    } finally {
+      set({ areProblemsLoading: false });
+      
     }
   },
 }));

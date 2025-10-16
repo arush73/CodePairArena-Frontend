@@ -81,10 +81,12 @@ export const useAuthStore = create((set) => ({
       let response;
 
       if (name === "google")
-        response = await axiosInstance.post("/auth/google");
+        response = await axiosInstance.get("/auth/google");
 
       if (name === "github")
-        response = await axiosInstance.post("/auth/github");
+        response = await axiosInstance.get("/auth/github");
+
+      console.log("This is the response: ", response.data)
 
       set({ user: response.data });
     } catch (error) {

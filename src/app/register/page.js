@@ -42,7 +42,8 @@ export default function Register() {
   }, [user, router]);
 
   const handleSSO = async (name) => {
-    await SSOHandler(name);
+    // await SSOHandler(name);
+    window.location.href = `http://localhost:8080/api/v1/auth/${name}`
   };
 
   const {
@@ -52,7 +53,9 @@ export default function Register() {
   } = useForm({ resolver: zodResolver(registerSchema) });
 
   const onSubmit = async (data) => {
+    console.log("the function for " + name + " is running fine")
     await registerUser(data);
+    console.log ("exiting the sso handle function")
   };
 
   return (

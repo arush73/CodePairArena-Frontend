@@ -41,7 +41,8 @@ export default function Register() {
     if (user) router.push("/");
   }, [user, router]);
   const handleSSO = async (name) => {
-    await SSOHandler(name);
+    // await SSOHandler(name); 
+    window.location.href = `http://localhost:8080/api/v1/auth/${name}`
   };
 
   const {
