@@ -75,7 +75,7 @@ export default function Some() {
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Image src={""} alt={""} width={20} height={20} />
+                    {/* <Image src={""} alt={""} width={20} height={20} /> */}
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56" align="start">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>

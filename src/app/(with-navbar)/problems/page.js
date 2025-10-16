@@ -131,7 +131,7 @@ const Page = () => {
     useProblemStore();
   const [filter, setFilter] = React.useState("ALL");
   const [search, setSearch] = React.useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     getAllProblems();
@@ -199,8 +199,8 @@ const Page = () => {
               <TableRow>
                 <TableHead className="w-[60%] text-left">Title</TableHead>
                 <TableHead className="text-center">Difficulty</TableHead>
-                <TableHead className="text-center">Time</TableHead>
-                <TableHead className="text-center">Memory</TableHead>
+                {/* <TableHead className="text-center">Time</TableHead>
+                <TableHead className="text-center">Memory</TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -209,10 +209,10 @@ const Page = () => {
                   <TableRow
                     key={index}
                     className="cursor-pointer transition-colors duration-150 hover:bg-muted/50"
-                    onClick={() => router.push(`/problems/${element._id}`)} 
+                    onClick={() => router.push(`/problems/${element._id}`)}
                   >
                     <TableCell className="font-medium">
-                      {element.title}
+                      {element.id + ". " + element.title}
                     </TableCell>
                     <TableCell className="text-center">
                       <span
@@ -225,12 +225,12 @@ const Page = () => {
                           element.difficulty.slice(1).toLowerCase()}
                       </span>
                     </TableCell>
-                    <TableCell className="text-center text-muted-foreground">
+                    {/* <TableCell className="text-center text-muted-foreground">
                       {element.time || "—"}
                     </TableCell>
                     <TableCell className="text-center text-muted-foreground">
                       {element.memory || "—"}
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))
               ) : (

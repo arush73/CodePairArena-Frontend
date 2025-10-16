@@ -53,11 +53,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 const Page = () => {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("JAVA");
   const [openSubmissionDialog, setOpenSubmissionDialog] = useState(false);
+  const [testTabValue, setTestTabValue] = useState("testCase");
   const {
     problem,
     getProblemDetails,
@@ -109,6 +123,7 @@ const Page = () => {
     };
     await executeCode(data);
     console.log("Response after executing code: ", runCodeResults);
+    setTestTabValue("testCaseResult")
   };
 
   const handleSubmit = async () => {
@@ -123,7 +138,7 @@ const Page = () => {
     };
     await submitCode(data);
     console.log("Response after executing code: ", submitCodeResults);
-    setOpenSubmissionDialog(true)
+    setOpenSubmissionDialog(true);
   };
 
   const openSubmission = async () => {
@@ -134,20 +149,20 @@ const Page = () => {
   return (
     <div className="flex flex-col  h-fit w-fit overflow-hidden">
       <Dialog
-          open={openSubmissionDialog}
-          onOpenChange={setOpenSubmissionDialog}
-        >
-          <DialogTrigger></DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
+        open={openSubmissionDialog}
+        onOpenChange={setOpenSubmissionDialog}
+      >
+        <DialogTrigger></DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       {/* upar waala  */}
       <div className="flex items-center justify-between   pt-3 pb-4 ">
         {/* logo waala */}
@@ -384,11 +399,18 @@ const Page = () => {
               </ResizablePanel>
               <ResizableHandle className="bg-transparent" />
               {/* <Separator className="bg-gray-600" /> */}
+
+              {/* {right neeche waala} */}
               <ResizablePanel
                 defaultSize={40}
                 className=" border-2 rounded-2xl  bg-[#1e1e1e]"
               >
-                <Tabs defaultValue="testCaseResult" className="w-[400px]">
+                <Tabs
+                  defaultValue="testCase"
+                  value={testTabValue}
+                  onValueChange={setTestTabValue}
+                  className="space-x-4 h-fit"
+                >
                   <TabsList>
                     <TabsTrigger value="testCase">
                       {" "}
@@ -411,8 +433,76 @@ const Page = () => {
                       Test Result{" "}
                     </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="testCase">
-                    will render later bc !!!
+                  <TabsContent value="testCase" className="h-fit">
+                    <ScrollArea className="h-auto overflow-auto pb-4">
+                      <div className="flex justify-center items-center">
+                        {/* {problem?.testCases?.map((element, index) => ())} */}
+                        <Tabs
+                          // value={activeTab} onValueChange={setActiveTab}
+                          defaultValue="0"
+                          className="w-full"
+                        >
+                          <TabsList className="space-x-4 text-bold ml-4">
+                            {problem?.testCases?.map((res, index) => (
+                              <TabsTrigger
+                                key={index + 1}
+                                value={index.toString()}
+                              >
+                                Case {index + 1}
+                                {/* {res.passed ? " ✅" : " ❌"} */}
+                              </TabsTrigger>
+                            ))}
+                          </TabsList>
+
+                          {problem?.testCases?.map((res, index) => (
+                            <TabsContent
+                              key={index + 1}
+                              value={index.toString()}
+                              className="p-2"
+                            >
+                              {/* <p>
+                              <b>Input:</b>
+                              <br />
+                              <input
+                                disabled={true}
+                                placeholder={res.input}
+                                defaultValue={res.input}
+                                className="ml-8 border-1 w-100"
+                              /> */}
+                              <FieldSet>
+                                {/* <FieldLegend>Profile</FieldLegend>
+                                <FieldDescription>
+                                  This appears on invoices and emails.
+                                </FieldDescription> */}
+                                <FieldGroup>
+                                  <Field className="">
+                                    <FieldLabel className="text-bold text-1xl">
+                                      Input:
+                                    </FieldLabel>
+                                    <Input
+                                      // disabled={true}
+                                      defaultValue={res.input}
+                                      placeholder="Evil Rabbit"
+                                    />
+                                  </Field>
+                                  <Field>
+                                    <FieldLabel className="text-bold text-1xl">
+                                      Output
+                                    </FieldLabel>
+                                    <Input
+                                      // id="username"
+                                      autoComplete="off"
+                                      // aria-invalid
+                                      defaultValue={res.expectedOutput}
+                                    />
+                                  </Field>
+                                </FieldGroup>
+                              </FieldSet>
+                            </TabsContent>
+                          ))}
+                        </Tabs>
+                      </div>
+                    </ScrollArea>
                   </TabsContent>
                   <TabsContent value="testCaseResult">
                     <RunCodeResults results={runCodeResults?.data} />
