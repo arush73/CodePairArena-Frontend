@@ -1,11 +1,12 @@
 import React from "react";
 import Navbar from "@/app/components/Navbar";
+import PricingPage from "./PricingPage";
 const Page = () => {
   return (
     <div>
       {" "}
       {/* <Navbar /> */}
-      hii this is the pricing page
+<PricingPage/>
     </div>
   );
 };

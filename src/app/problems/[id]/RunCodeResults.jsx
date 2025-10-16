@@ -36,7 +36,7 @@ const RunCodeResults = ({ results }) => {
     );
 
   return (
-    <ScrollArea className="h-auto overflow-auto pb-4">
+    <ScrollArea className="h-60 overflow-auto pb-4">
       <div className="w-full pl-4">
         <div>
           {results.every((res) => res.passed) ? (

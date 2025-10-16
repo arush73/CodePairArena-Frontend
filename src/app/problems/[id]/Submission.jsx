@@ -34,21 +34,31 @@ const Submission = ({ submissions }) => {
             <TableHead>Language</TableHead>
             <TableHead>Time</TableHead>
             <TableHead className="">Memory</TableHead>
+            <TableHead className="">Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {submissions?.map((element, index) => (
             <TableRow
               key={index}
-              onClick={() => {
-                setSelectedSubmission(element); // 👈 row ka data set kar
-                setOpen(true); // 👈 dialog khol de
-              }}
+              // onClick={() => {
+              //   setSelectedSubmission(element); // 👈 row ka data set kar
+              //   setOpen(true); // 👈 dialog khol de
+              // }}
             >
-              <TableCell className="">{element.status}</TableCell>
+              <TableCell
+                className={
+                  element.status === "ACCEPTED"
+                    ? "font-bold text-1xl text-green-400 ml-4 mb-4"
+                    : "font-bold text-1xl text-red-600 ml-4 mb-4"
+                }
+              >
+                {element.status}
+              </TableCell>
               <TableCell className="">{element.language}</TableCell>
-              <TableCell>{element.time}</TableCell>
-              <TableCell>{element.memory}</TableCell>
+              <TableCell>{element.time + " s"}</TableCell>
+              <TableCell>{Math.floor(Number(element.memory)) + " KB"}</TableCell>
+              <TableCell>{element.createdAt.split("T")[0]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -69,8 +79,7 @@ const Submission = ({ submissions }) => {
           </DialogHeader>
 
           {selectedSubmission ? (
-            
-              <div>details wala kaam baki ha !!!</div>
+            <div>details wala kaam baki ha !!!</div>
           ) : (
             <p>No data found.</p>
           )}

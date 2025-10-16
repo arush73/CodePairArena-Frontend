@@ -7,7 +7,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Editor, { useMonaco } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { SparklesCore } from "@/components/ui/sparkles";
@@ -28,7 +28,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -53,19 +52,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldTitle,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { CodeBlock } from "@/components/ui/code-block";
 
 const Page = () => {
   const [code, setCode] = useState("");
@@ -123,7 +112,7 @@ const Page = () => {
     };
     await executeCode(data);
     console.log("Response after executing code: ", runCodeResults);
-    setTestTabValue("testCaseResult")
+    setTestTabValue("testCaseResult");
   };
 
   const handleSubmit = async () => {
@@ -138,6 +127,8 @@ const Page = () => {
     };
     await submitCode(data);
     console.log("Response after executing code: ", submitCodeResults);
+
+    // will work on this later !!!!
     setOpenSubmissionDialog(true);
   };
 
@@ -330,7 +321,12 @@ const Page = () => {
                   <Submission submissions={submissions} />
                 )}
               </TabsContent>
-              <TabsContent value="solutions">solutions</TabsContent>
+              <TabsContent value="solutions">
+                <CodeBlock
+                  language={language}
+                  code={problem?.codeSnippet?.[0].code}
+                />
+              </TabsContent>
             </Tabs>
           </ResizablePanel>
           {/* <Separator orientation="vertical" className="" /> */}
@@ -434,7 +430,7 @@ const Page = () => {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="testCase" className="h-fit">
-                    <ScrollArea className="h-auto overflow-auto pb-4">
+                    <ScrollArea className="h-60 overflow-auto pb-4">
                       <div className="flex justify-center items-center">
                         {/* {problem?.testCases?.map((element, index) => ())} */}
                         <Tabs
@@ -482,7 +478,7 @@ const Page = () => {
                                     <Input
                                       // disabled={true}
                                       defaultValue={res.input}
-                                      placeholder="Evil Rabbit"
+                                      // placeholder="Evil Rabbit"
                                     />
                                   </Field>
                                   <Field>
