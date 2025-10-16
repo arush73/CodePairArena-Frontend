@@ -21,8 +21,8 @@ export default function ContactPage() {
               Contact Us
             </CardTitle>
             <p className="text-muted-foreground">
-              We&apos;d love to hear from you! Whether you have a question,
-              feedback, or just want to say hello — drop us a message.
+              I&apos;d love to hear from you! Whether you have a question,
+              feedback, or just want to say hello — drop me a message.
             </p>
           </CardHeader>
 
@@ -31,19 +31,19 @@ export default function ContactPage() {
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>support@leetcodeclone.dev</span>
+                <span>arushgzbin@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-primary" />
-                <span>+91 99999 99999</span>
+                <span>+91 98998 83195</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>Bangalore, India</span>
+                <span>Noida, India</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MessageSquare className="w-5 h-5 text-primary" />
-                <span>Let&pos;s build something awesome together 🚀</span>
+                <span>Let&apos;s build something awesome together 🚀</span>
               </div>
             </div>
 

@@ -6,7 +6,7 @@ const Page = () => {
     <div>
       {" "}
       {/* <Navbar /> */}
-<PricingPage/>
+      <PricingPage />
     </div>
   );
 };
