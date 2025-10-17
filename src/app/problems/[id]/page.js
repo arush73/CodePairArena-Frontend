@@ -55,6 +55,15 @@ import {
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { CodeBlock } from "@/components/ui/code-block";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const Page = () => {
   const [code, setCode] = useState("");
@@ -146,10 +155,36 @@ const Page = () => {
         <DialogTrigger></DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle
+              className="font-bold
+              text-2xl
+              text-green-400
+              ml-4
+              mb-4"
+            >
+              {submitCodeResults?.data?.status}
+            </DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              {/* <div className="flex items-center justify-center space-x-40">
+                <p className="border-2 border-amber-50 rounded-2xl pb-2 pt-2 pl-6 pr-6" >Time : {submitCodeResults?.data?.anurag}anurag </p>
+                <p>chamar</p>
+              </div> */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Details</CardTitle>
+                  {/* <CardDescription>Card Description</CardDescription> */}
+                  {/* <CardAction>Card Action</CardAction> */}
+                </CardHeader>
+                <CardContent>
+                  <p>Time: {submitCodeResults?.data?.time} ms</p>
+                </CardContent>
+                <CardContent>
+                  <p>Memory: {Math.floor((submitCodeResults?.data?.memory)/1024)} KB</p>
+                </CardContent>
+                {/* <CardFooter>
+                  <p>Card Footer</p>
+                </CardFooter> */}
+              </Card>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
@@ -321,10 +356,11 @@ const Page = () => {
                   <Submission submissions={submissions} />
                 )}
               </TabsContent>
-              <TabsContent value="solutions">
+              <TabsContent value="solutions" className="p-4">
                 <CodeBlock
                   language={language}
                   code={problem?.codeSnippet?.[0].code}
+                  className=""
                 />
               </TabsContent>
             </Tabs>

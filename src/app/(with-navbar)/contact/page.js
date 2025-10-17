@@ -18,7 +18,7 @@ export default function ContactPage() {
         <Card className="shadow-xl border-muted/40 rounded-2xl backdrop-blur-sm bg-card/70">
           <CardHeader className="text-center space-y-3">
             <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
-              Contact Us
+              Contact Me
             </CardTitle>
             <p className="text-muted-foreground">
               I&apos;d love to hear from you! Whether you have a question,
