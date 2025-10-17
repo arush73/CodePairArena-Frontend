@@ -25,6 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import NavBar from "@/app/components/Navbar";
+import Link from "next/link";
 
 /*
   LeetClone - Homepage (single-file React component)
@@ -91,7 +92,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-2">
               <a className="text-zinc-300 hover:text-white">Problems</a>
               <a className="text-zinc-300 hover:text-white">Contests</a>
@@ -110,7 +111,7 @@ export default function HomePage() {
             <div className="sm:hidden">
               <Button variant="ghost">Menu</Button>
             </div>
-          </div>
+          </div> */}
         </nav>
 
         {/* HERO */}
@@ -131,30 +132,36 @@ export default function HomePage() {
               </p>
 
               <div className="flex gap-3 mt-6">
+                <Link href="/problems">
                 <Button className="bg-indigo-600 hover:bg-indigo-500 px-6 py-3">
                   Start Coding
                 </Button>
                 <Button variant="ghost" className="px-6 py-3">
                   Explore Problems
                 </Button>
+                </Link>
               </div>
 
               <div className="mt-6 flex items-center gap-3">
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-zinc-800/60">Community-driven</Badge>
-                  <Badge className="bg-indigo-700/30">Realtime Editor</Badge>
-                  <Badge className="bg-yellow-700/20">Contests</Badge>
+                  <Badge className="bg-zinc-800/60 text-gray-300">Community-driven</Badge>
+                  <Badge className="bg-indigo-700/30 text-gray-300">Realtime Editor</Badge>
+                  <Badge className="bg-yellow-700/20 text-gray-300">Contests</Badge>
                 </div>
               </div>
 
               {/* Search bar */}
-              <div className="mt-8 max-w-xl">
-                <div className="flex items-center bg-zinc-800/40 rounded-lg p-2 gap-2">
-                  <Search className="w-5 h-5 text-zinc-400 ml-2" />
-                  <Input placeholder="Search problems, tags, or topics" />
-                  <Button variant="ghost">Go</Button>
+                  <Link href="/pricing">
+              <div className="mt-8 max-w-xl hover:bg-orange-500/40">
+                <div className="flex items-center justify-center bg-orange-500/50 rounded-lg p-2 gap-2">
+                  {/* <Search className="w-5 h-5 text-zinc-400 ml-2" /> */}
+                  {/* <Input placeholder="Search problems, tags, or topics" /> */}
+                    {/* <Button variant="ghost"> */}
+                    Get Ahead From Others
+                  {/* </Button> */}
                 </div>
               </div>
+                  </Link>
             </motion.div>
 
             <motion.div
@@ -276,10 +283,12 @@ export default function HomePage() {
                     seconds.
                   </p>
                   <div className="mt-4">
-                    <Input placeholder="Email address" />
+                    {/* <Input placeholder="Email address" /> */}
+                    <Link href="/register">
                     <Button className="w-full mt-3 bg-indigo-600 hover:bg-indigo-500">
                       Create Account
                     </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
@@ -296,7 +305,7 @@ export default function HomePage() {
             <div className="flex gap-4 items-center">
               <a className="text-zinc-300 hover:text-white">Privacy</a>
               <a className="text-zinc-300 hover:text-white">Terms</a>
-              <a className="text-zinc-300 hover:text-white">Contact</a>
+              <a href="/contact" className="text-zinc-300 hover:text-white">Contact</a>
             </div>
           </div>
         </footer>

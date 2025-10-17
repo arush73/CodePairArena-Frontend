@@ -66,9 +66,9 @@ export default function Some() {
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
             <NavbarButton
-              onClick={() => {
-                user ? console.log() : router.push("/login");
-              }}
+            // onClick={() => {
+            //   user ? console.log() : router.push("/login");
+            // }}
             >
               {/* {!user ? (
                 "Login"
@@ -83,34 +83,48 @@ export default function Some() {
                   />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="start">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuGroup>
-                    <Link href="/profile">
-                      <DropdownMenuItem>Profile</DropdownMenuItem>
-                    </Link>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuSub>
-                      <DropdownMenuSubTrigger>
-                        Invite users
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent>
-                          <DropdownMenuItem>Email</DropdownMenuItem>
-                          <DropdownMenuItem>Message</DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  {/* <DropdownMenuItem>GitHub</DropdownMenuItem> */}
-                  <DropdownMenuItem>Support</DropdownMenuItem>
-                  <DropdownMenuItem disabled>API</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>
-                    Log out
-                  </DropdownMenuItem>
+                  {user ? (
+                    <>
+                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                      <DropdownMenuGroup>
+                        <Link href="/profile">
+                          <DropdownMenuItem>Profile</DropdownMenuItem>
+                        </Link>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            Invite users
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                              <DropdownMenuItem>Email</DropdownMenuItem>
+                              <DropdownMenuItem>Message</DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+
+                      <DropdownMenuItem>Support</DropdownMenuItem>
+                      <DropdownMenuItem disabled>API</DropdownMenuItem>
+                      <DropdownMenuSeparator />
+
+                      <DropdownMenuItem onClick={handleLogout}>
+                        Log out
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <>
+                      {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
+                      <DropdownMenuGroup>
+                        <Link href="/login">
+                          <DropdownMenuItem>login</DropdownMenuItem>
+                        </Link>
+                      </DropdownMenuGroup>
+                    </>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
               {/* )} */}
@@ -160,7 +174,7 @@ export default function Some() {
               </NavbarButton>
             </div>
           </MobileNavMenu>
-        </MobileNav>*/}
+        </MobileNav> */}
       </Navbar>
       <DummyContent />
       {/* Navbar */}
