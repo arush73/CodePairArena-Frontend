@@ -7,6 +7,7 @@ import {
   useScroll,
   useMotionValueEvent,
 } from "motion/react";
+import Image from "next/image";
 import Link from "next/link";
 
 import React, { useRef, useState } from "react";
@@ -196,13 +197,12 @@ export const NavbarLogo = () => {
       href="/"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
-      <img
-        src="https://leetcode.com/_next/static/images/logo-dark-c96c407d175e36c81e236fcfdd682a0b.png"
-        alt="logo"
-        width={30}
-        height={30}
-        />
-      <span className="font-medium text-black dark:text-white">mine logo later</span>
+      <img src="/main_logo.jpeg" alt="logo" width={60} height={60} />
+      {/*<Image src={"/main_logo.svg"} height={10} width={10} alt="" /> */}
+      <span className="font-medium text-black dark:text-white">
+        {/* <Image src={"/main_logo.jpeg"} height={60} width={60} alt="" /> */}
+        Leetclone
+      </span>
     </a>
   );
 };

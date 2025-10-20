@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Flame, Code, Calendar, Award } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function ProfilePage({ user }) {
   return (
@@ -14,12 +15,14 @@ export default function ProfilePage({ user }) {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6 mb-10"
       >
-        <img
+        <Image
           src={
-            user?.avatar ||
-            "https://api.dicebear.com/7.x/avataaars/svg?seed=leetuser"
-          }
-          alt="avatar"
+            // user?.avatar
+            false
+            || "/defaultUser.svg"}
+          alt=""
+          height={10}
+          width={10}
           className="w-32 h-32 rounded-full border-4 border-yellow-500 shadow-lg"
         />
         <div>
