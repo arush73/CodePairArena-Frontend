@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { LoaderFour } from "@/components/ui/loader";
 import Link from "next/link";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const registerSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -43,7 +44,11 @@ export default function Register() {
 
   const handleSSO = async (name) => {
     // await SSOHandler(name);
-    window.location.href = `http://localhost:8080/api/v1/auth/${name}`
+    if (name === "github") {
+    }
+    toast("currently not working");
+    return;
+    window.location.href = `https://leetclone-next-backend-production.up.railway.app/api/v1/auth/${name}`;
   };
 
   const {
@@ -53,9 +58,9 @@ export default function Register() {
   } = useForm({ resolver: zodResolver(registerSchema) });
 
   const onSubmit = async (data) => {
-    console.log("the function for " + name + " is running fine")
+    console.log("the function for " + name + " is running fine");
     await registerUser(data);
-    console.log ("exiting the sso handle function")
+    console.log("exiting the sso handle function");
   };
 
   return (
@@ -67,95 +72,125 @@ export default function Register() {
               {/* <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
             
           </div> */}
-              <h1 className="text-2xl font-bold mt-2">Welcome </h1>
-              <p className="text-base-content/60">Sign Up to your account</p>
+              <motion.h1
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-2xl font-bold mt-2"
+              >
+                Welcome{" "}
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-base-content/60"
+              >
+                Sign Up to your account
+              </motion.p>
             </div>
           </div>
           <form className="my-8" onSubmit={handleSubmit(onSubmit)}>
-            <LabelInputContainer className="mb-4">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                placeholder="you@example.com"
-                type="email"
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="none"
-                {...register("email", { required: true })}
-                className={`input input-bordered w-full pl-10 ${
-                  errors.email ? "input-error" : ""
-                }`}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
-              )}
-            </LabelInputContainer>
-            <LabelInputContainer className="mb-4">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                placeholder="••••••••"
-                type="password"
-                {...register("password", { required: true })}
-                className={`input input-bordered w-full pl-10 ${
-                  errors.password ? "input-error" : ""
-                }
-                }`}
-              />
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.password.message}
-                </p>
-              )}
-            </LabelInputContainer>
-
-            <button
-              className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
-              type="submit"
-              disabled={isRegistering}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
             >
-              {!isRegistering ? "Register" : <LoaderFour text="registering" />}
-              <BottomGradient />
-            </button>
+              <LabelInputContainer className="mb-4">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  placeholder="you@example.com"
+                  type="email"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="none"
+                  {...register("email", { required: true })}
+                  className={`input input-bordered w-full pl-10 ${
+                    errors.email ? "input-error" : ""
+                  }`}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </LabelInputContainer>
+
+              <LabelInputContainer className="mb-4">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  placeholder="••••••••"
+                  type="password"
+                  {...register("password", { required: true })}
+                  className={`input input-bordered w-full pl-10 ${
+                    errors.password ? "input-error" : ""
+                  }
+                }`}
+                />
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
+              </LabelInputContainer>
+
+              <button
+                className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+                type="submit"
+                disabled={isRegistering}
+              >
+                {!isRegistering ? (
+                  "Register"
+                ) : (
+                  <LoaderFour text="registering" />
+                )}
+                <BottomGradient />
+              </button>
+            </motion.div>
 
             <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 
-            <div className="flex flex-col space-y-4">
-              <button
-                className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
-                disabled={isSSO}
-                type="button"
-                onClick={() => handleSSO("github")}
-              >
-                <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                  GitHub
-                </span>
-                <BottomGradient />
-              </button>
-              <button
-                className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
-                disabled={isSSO}
-                type="button"
-                onClick={() => handleSSO("google")}
-              >
-                <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                  Google
-                </span>
-                <BottomGradient />
-              </button>
-              <div className="text-center">
-                <p className="text-base-content/60">
-                  Already have an account?{" "}
-                  <Link href="/login" className="link link-primary">
-                    Log in
-                  </Link>
-                </p>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="flex flex-col space-y-4">
+                <button
+                  className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
+                  disabled={isSSO}
+                  type="button"
+                  onClick={() => handleSSO("github")}
+                >
+                  <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+                  <span className="text-sm text-neutral-700 dark:text-neutral-300">
+                    GitHub
+                  </span>
+                  <BottomGradient />
+                </button>
+                <button
+                  className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
+                  disabled={isSSO}
+                  type="button"
+                  onClick={() => handleSSO("google")}
+                >
+                  <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+                  <span className="text-sm text-neutral-700 dark:text-neutral-300">
+                    Google
+                  </span>
+                  <BottomGradient />
+                </button>
+                <div className="text-center">
+                  <p className="text-base-content/60">
+                    Already have an account?{" "}
+                    <Link href="/login" className="link link-primary">
+                      Log in
+                    </Link>
+                  </p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </form>
         </div>
         <AuthImagePattern

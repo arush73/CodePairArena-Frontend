@@ -16,7 +16,7 @@
 // export default Home;
 
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -28,12 +28,15 @@ import NavBar from "@/app/components/Navbar";
 import Link from "next/link";
 
 /*
-  LeetClone - Homepage (single-file React component)
+  CodePairArena - Homepage (single-file React component)
   - Next.js + Tailwind + shadcn UI components assumed available
   - Dark, premium theme. Replace assets and routes as needed.
 */
 
 export default function HomePage() {
+
+  // will either hardcode or fetch these stats from backend later will see
+  const [sampleProblemId, setSampleProblemId] = React.useState("68ea43cb79dd88ec4e999b22");
   const stats = [
     { label: "Problems", value: "3.5k+" },
     { label: "Active Users", value: "120k+" },
@@ -64,7 +67,7 @@ export default function HomePage() {
     {
       name: "Rohan",
       role: "SDE @ ScaleX",
-      text: "Solved 200+ problems using LeetClone — interview-ready in 3 months.",
+      text: "Solved 200+ problems using CodePairArena — interview-ready in 3 months.",
     },
     {
       name: "Maya",
@@ -85,7 +88,7 @@ export default function HomePage() {
               <span className="font-bold">LC</span>
             </div>
             <div className="hidden sm:block">
-              <h3 className="font-semibold">LeetClone</h3>
+              <h3 className="font-semibold">CodePairArena</h3>
               <p className="text-xs text-zinc-400 -mt-1">
                 Practice. Compete. Master.
               </p>
@@ -132,36 +135,44 @@ export default function HomePage() {
               </p>
 
               <div className="flex gap-3 mt-6">
+                <Link href="/problems/68f727fa43e771f0ecfa3e39">
+                  <Button className="bg-indigo-600 hover:bg-indigo-500 px-6 py-3">
+                    Start Coding
+                  </Button>
+                </Link>
                 <Link href="/problems">
-                <Button className="bg-indigo-600 hover:bg-indigo-500 px-6 py-3">
-                  Start Coding
-                </Button>
-                <Button variant="ghost" className="px-6 py-3">
-                  Explore Problems
-                </Button>
+                  <Button variant="ghost" className="px-6 py-3">
+                    Explore Problems
+                  </Button>
                 </Link>
               </div>
 
               <div className="mt-6 flex items-center gap-3">
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-zinc-800/60 text-gray-300">Community-driven</Badge>
-                  <Badge className="bg-indigo-700/30 text-gray-300">Realtime Editor</Badge>
-                  <Badge className="bg-yellow-700/20 text-gray-300">Contests</Badge>
+                  <Badge className="bg-zinc-800/60 text-gray-300">
+                    Community-driven
+                  </Badge>
+                  <Badge className="bg-indigo-700/30 text-gray-300">
+                    Realtime Editor
+                  </Badge>
+                  <Badge className="bg-yellow-700/20 text-gray-300">
+                    Contests
+                  </Badge>
                 </div>
               </div>
 
               {/* Search bar */}
-                  <Link href="/pricing">
-              <div className="mt-8 max-w-xl hover:bg-orange-500/40">
-                <div className="flex items-center justify-center bg-orange-500/50 rounded-lg p-2 gap-2">
-                  {/* <Search className="w-5 h-5 text-zinc-400 ml-2" /> */}
-                  {/* <Input placeholder="Search problems, tags, or topics" /> */}
+              <Link href="/pricing">
+                <div className="mt-8 max-w-xl hover:bg-orange-500/40">
+                  <div className="flex items-center justify-center bg-orange-500/50 rounded-lg p-2 gap-2">
+                    {/* <Search className="w-5 h-5 text-zinc-400 ml-2" /> */}
+                    {/* <Input placeholder="Search problems, tags, or topics" /> */}
                     {/* <Button variant="ghost"> */}
                     Get Ahead From Others
-                  {/* </Button> */}
+                    {/* </Button> */}
+                  </div>
                 </div>
-              </div>
-                  </Link>
+              </Link>
             </motion.div>
 
             <motion.div
@@ -285,9 +296,9 @@ export default function HomePage() {
                   <div className="mt-4">
                     {/* <Input placeholder="Email address" /> */}
                     <Link href="/register">
-                    <Button className="w-full mt-3 bg-indigo-600 hover:bg-indigo-500">
-                      Create Account
-                    </Button>
+                      <Button className="w-full mt-3 bg-indigo-600 hover:bg-indigo-500">
+                        Create Account
+                      </Button>
                     </Link>
                   </div>
                 </CardContent>
@@ -300,12 +311,14 @@ export default function HomePage() {
         <footer className="border-t border-zinc-800/60 mt-12 py-8">
           <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-zinc-400">
-              © {new Date().getFullYear()} LeetClone — Built for builders
+              © {new Date().getFullYear()} CodePairArena — Built for builders
             </div>
             <div className="flex gap-4 items-center">
               <a className="text-zinc-300 hover:text-white">Privacy</a>
               <a className="text-zinc-300 hover:text-white">Terms</a>
-              <a href="/contact" className="text-zinc-300 hover:text-white">Contact</a>
+              <a href="/contact" className="text-zinc-300 hover:text-white">
+                Contact
+              </a>
             </div>
           </div>
         </footer>

@@ -64,6 +64,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 const Page = () => {
   const [code, setCode] = useState("");
@@ -84,6 +85,7 @@ const Page = () => {
     submissions,
     areSubmissionsLoading,
   } = useProblemStore();
+  const { user } = useAuthStore();
 
   const params = useParams();
   const problemId = params.id;
@@ -127,6 +129,10 @@ const Page = () => {
   const handleSubmit = async () => {
     if (!code) {
       toast("please write some code to submit 😅");
+      return;
+    }
+    if (!user) {
+      toast("login/register to make a submission");
       return;
     }
     const data = {
@@ -179,7 +185,10 @@ const Page = () => {
                   <p>Time: {submitCodeResults?.data?.time} ms</p>
                 </CardContent>
                 <CardContent>
-                  <p>Memory: {Math.floor((submitCodeResults?.data?.memory)/1024)} KB</p>
+                  <p>
+                    Memory: {Math.floor(submitCodeResults?.data?.memory / 1024)}{" "}
+                    KB
+                  </p>
                 </CardContent>
                 {/* <CardFooter>
                   <p>Card Footer</p>
@@ -194,9 +203,9 @@ const Page = () => {
         {/* logo waala */}
         <div className="pl-4">
           <Image
-            src="https://leetcode.com/_next/static/images/logo-dark-c96c407d175e36c81e236fcfdd682a0b.png"
-            height={20}
-            width={20}
+            src="/main_logo.jpeg"
+            height={40}
+            width={40}
             alt=""
             onClick={() => {
               router.push("/");
@@ -233,7 +242,7 @@ const Page = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="mr-4">
-                <AvatarImage src="/description.svg" />
+                <AvatarImage src="/defaultUser.svg"/>
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>

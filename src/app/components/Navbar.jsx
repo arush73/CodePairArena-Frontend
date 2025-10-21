@@ -31,6 +31,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { Avatar } from "@/components/ui/avatar";
+import { BackgroundGradient } from "@/components/ui/background-gradient";
 
 export default function Some() {
   const router = useRouter();
@@ -44,7 +46,7 @@ export default function Some() {
   // }, []);
   const navItems = [
     {
-      name: "problem",
+      name: "problems",
       link: "/problems",
     },
     {
@@ -65,70 +67,74 @@ export default function Some() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton
-            // onClick={() => {
-            //   user ? console.log() : router.push("/login");
-            // }}
-            >
-              {/* {!user ? (
+            <BackgroundGradient className={" rounded-[10px] bg-black"}>
+              <NavbarButton
+                // onClick={() => {
+                //   user ? console.log() : router.push("/login");
+                // }}
+                className="bg-transparent"
+              >
+                {/* {!user ? (
                 "Login"
               ) : ( */}
-              <DropdownMenu className="bg-black">
-                <DropdownMenuTrigger asChild>
-                  <Image
-                    src={"/defaultUser.svg"}
-                    alt={"nahh"}
-                    width={20}
-                    height={20}
-                  />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="start">
-                  {user ? (
-                    <>
-                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                      <DropdownMenuGroup>
-                        <Link href="/profile">
-                          <DropdownMenuItem>Profile</DropdownMenuItem>
-                        </Link>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            Invite users
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent>
-                              <DropdownMenuItem>Email</DropdownMenuItem>
-                              <DropdownMenuItem>Message</DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
+                <DropdownMenu className="bg-black">
+                  <DropdownMenuTrigger className="" asChild>
+                    <Image
+                      src={"/defaultUser.svg"}
+                      alt={"nahh"}
+                      width={20}
+                      height={20}
+                    />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="start">
+                    {user ? (
+                      <>
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuGroup>
+                          <Link href="/profile">
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                          </Link>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                          <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>
+                              Invite users
+                            </DropdownMenuSubTrigger>
+                            <DropdownMenuPortal>
+                              <DropdownMenuSubContent>
+                                <DropdownMenuItem>Email</DropdownMenuItem>
+                                <DropdownMenuItem>Message</DropdownMenuItem>
+                              </DropdownMenuSubContent>
+                            </DropdownMenuPortal>
+                          </DropdownMenuSub>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
 
-                      <DropdownMenuItem>Support</DropdownMenuItem>
-                      <DropdownMenuItem disabled>API</DropdownMenuItem>
-                      <DropdownMenuSeparator />
+                        <DropdownMenuItem>Support</DropdownMenuItem>
+                        <DropdownMenuItem disabled>API</DropdownMenuItem>
+                        <DropdownMenuSeparator />
 
-                      <DropdownMenuItem onClick={handleLogout}>
-                        Log out
-                      </DropdownMenuItem>
-                    </>
-                  ) : (
-                    <>
-                      {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
-                      <DropdownMenuGroup>
-                        <Link href="/login">
-                          <DropdownMenuItem>login</DropdownMenuItem>
-                        </Link>
-                      </DropdownMenuGroup>
-                    </>
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              {/* )} */}
-            </NavbarButton>
+                        <DropdownMenuItem onClick={handleLogout}>
+                          Log out
+                        </DropdownMenuItem>
+                      </>
+                    ) : (
+                      <>
+                        {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
+                        <DropdownMenuGroup>
+                          <Link href="/login">
+                            <DropdownMenuItem>login</DropdownMenuItem>
+                          </Link>
+                        </DropdownMenuGroup>
+                      </>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* )} */}
+              </NavbarButton>
+            </BackgroundGradient>
+
             {/* <NavbarButton variant="primary">Book a call</NavbarButton> */}
           </div>
         </NavBody>
