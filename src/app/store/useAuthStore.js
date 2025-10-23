@@ -9,6 +9,7 @@ export const useAuthStore = create((set) => ({
   isCheckingAuth: false,
   isuserChecked: false,
   isSSO: false,
+  isRegistrationSuccessfull:false,
 
   checkUser: async () => {
     set({ isCheckingAuth: true });
@@ -35,7 +36,7 @@ export const useAuthStore = create((set) => ({
       const response = await axiosInstance.post("/auth/register", data);
       console.log("User registeres successfully: ", response.data);
 
-      set({ user: response.data });
+      set({ isRegistrationSuccessfull: response.data?.success ? true : false });
       toast("user registered successfully");
     } catch (error) {
       console.log("Error registering the user: ", error.message);

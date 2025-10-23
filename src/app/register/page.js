@@ -31,16 +31,23 @@ const registerSchema = z.object({
 export default function Register() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const { registerUser, isRegistering, user, checkUser, SSOHandler, isSSO } =
-    useAuthStore();
+  const {
+    registerUser,
+    isRegistering,
+    user,
+    checkUser,
+    SSOHandler,
+    isSSO,
+    isRegistrationSuccessfull,
+  } = useAuthStore();
 
   useEffect(() => {
     checkUser();
   }, []);
 
   useEffect(() => {
-    if (user) router.push("/");
-  }, [user, router]);
+    if (isRegistrationSuccessfull) router.push("/");
+  }, [isRegistrationSuccessfull, router]);
 
   const handleSSO = async (name) => {
     // await SSOHandler(name);
@@ -60,7 +67,6 @@ export default function Register() {
   const onSubmit = async (data) => {
     console.log("the function for " + name + " is running fine");
     await registerUser(data);
-    console.log("exiting the sso handle function");
   };
 
   return (
