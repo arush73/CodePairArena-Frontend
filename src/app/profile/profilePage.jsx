@@ -29,7 +29,7 @@ export default function ProfilePage({ user }) {
           <h1 className="text-3xl font-bold">
             {user?.username || "Anonymous Coder"}
           </h1>
-          <p className="text-zinc-400">@{user?.handle || "unknown"}</p>
+          <p className="text-zinc-400">{user?.handle || "unknown"}</p>
           <div className="flex gap-3 mt-3">
             <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
               {user?.rank || "Silver"}

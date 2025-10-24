@@ -26,8 +26,8 @@ const Page = () => {
           <NavBar />
           <ProfilePage
             user={{
-              username: user?.email,
-              handle: user?.username,
+              username: user?.username,
+              handle: user?.email,
               rank: "Gold",
               level: "Advanced",
               streak: 21,
