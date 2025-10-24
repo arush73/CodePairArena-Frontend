@@ -27,7 +27,7 @@ const Page = () => {
           <ProfilePage
             user={{
               username: user?.email,
-              handle: user?.email,
+              handle: user?.username,
               rank: "Gold",
               level: "Advanced",
               streak: 21,

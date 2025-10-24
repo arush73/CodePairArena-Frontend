@@ -36,7 +36,8 @@ export const useAuthStore = create((set) => ({
       const response = await axiosInstance.post("/auth/register", data);
       console.log("User registeres successfully: ", response.data);
 
-      set({ isRegistrationSuccessfull: response.data?.success ? true : false });
+      set({ isRegistrationSuccessfull: response.data.success ? true : false });
+      set({ isRegistrationSuccessfull: response.data });
       toast("user registered successfully");
     } catch (error) {
       console.log("Error registering the user: ", error.message);
