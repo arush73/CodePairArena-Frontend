@@ -162,11 +162,11 @@ const Page = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle
-              className="font-bold
-              text-2xl
-              text-green-400
-              ml-4
-              mb-4"
+              className={
+                submitCodeResults?.data?.status === "ACCEPTED"
+                  ? "font-bold text-2xl  text-green-400 ml-4 mb-4"
+                  : "font-bold text-2xl  text-red-400 ml-4 mb-4"
+              }
             >
               {submitCodeResults?.data?.status}
             </DialogTitle>
@@ -242,7 +242,7 @@ const Page = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="mr-4">
-                <AvatarImage src="/defaultUser.svg"/>
+                <AvatarImage src="/defaultUser.svg" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
