@@ -101,7 +101,7 @@ const RunCodeResults = ({ results }) => {
                     </FieldLabel>
                     <Input
                       autoComplete="off"
-                      defaultValue={res.stdout}
+                      defaultValue={res.input}
                       disabled={true}
                     />
                   </Field>
@@ -113,7 +113,7 @@ const RunCodeResults = ({ results }) => {
                       // id="username"
                       autoComplete="off"
                       // aria-invalid
-                      defaultValue={res.expected}
+                      defaultValue={res.stdout}
                       disabled={true}
                     />
                   </Field>
