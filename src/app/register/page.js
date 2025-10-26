@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuthStore } from "../store/useAuthStore";
 import { useEffect, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";

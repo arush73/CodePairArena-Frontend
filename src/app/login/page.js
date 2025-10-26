@@ -29,16 +29,16 @@ const LoginSchema = z.object({
 });
 
 export default function Register() {
-  const router = useRouter();
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const { loginUser, isLoggingIn, user, checkUser, SSOHandler, isSSO } =
-    useAuthStore();
-
+  useAuthStore();
+  
   // checking if user is already registered or not
   useEffect(() => {
     checkUser();
   }, []);
-
+  
   useEffect(() => {
     if (user) router.push("/");
   }, [user, router]);
