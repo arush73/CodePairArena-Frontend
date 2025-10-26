@@ -105,9 +105,9 @@ export default function HomePage() {
 // }
   //   },[accessToken, refreshToken])
   
-  const [searchParams] = useSearchParams();
-  const accessToken = searchParams.get("accessToken");
-  const refreshToken = searchParams.get("refreshToken");
+  const params = useParams()
+  const accessToken = params.accessToken
+  const refreshToken = params.refreshToken;
 
   useEffect(() => {
     if (accessToken) {
