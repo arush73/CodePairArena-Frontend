@@ -25,6 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import NavBar from "@/app/components/Navbar";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import {useSearchParams} from "react-router-dom"
 
 
 export default function HomePage() {
@@ -71,38 +72,66 @@ export default function HomePage() {
     },
   ];
 
-  const params = useParams();
-  let accessToken = params.accessToken;
-  let refreshToken = params.refreshToken;
+//   const params = useParams();
+//   let accessToken = params.accessToken;
+//   let refreshToken = params.refreshToken;
+//   useEffect(() => {
+//     refreshToken = params.refreshToken
+//     accessToken = params.accessToken
+//   }, [params])
+
+
+
+//   useEffect(() => {
+// if (accessToken) {
+//   const expirationDate = new Date();
+//   expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
+//   document.cookie =
+//     "accessToken=" +
+//     accessToken +
+//     "; expires=" +
+//     expirationDate.toUTCString() +
+//     "; path=/; HttpOnly; Secure; SameSite=None";
+// }
+// if (refreshToken) {
+//   const expirationDate = new Date();
+//   expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
+//   document.cookie =
+//     "refreshToken=" +
+//     accessToken +
+//     "; expires=" +
+//     expirationDate.toUTCString() +
+//     "; path=/; HttpOnly; Secure; SameSite=None";
+// }
+  //   },[accessToken, refreshToken])
+  
+  const [searchParams] = useSearchParams();
+  const accessToken = searchParams.get("accessToken");
+  const refreshToken = searchParams.get("refreshToken");
+
   useEffect(() => {
-    refreshToken = params.refreshToken
-    accessToken = params.accessToken
-  }, [params])
+    if (accessToken) {
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+      document.cookie =
+        "accessToken=" +
+        accessToken +
+        "; expires=" +
+        expirationDate.toUTCString() +
+        "; path=/; Secure; SameSite=None";
+    }
 
-
-
-  useEffect(() => {
-if (accessToken) {
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
-  document.cookie =
-    "accessToken=" +
-    accessToken +
-    "; expires=" +
-    expirationDate.toUTCString() +
-    "; path=/; HttpOnly; Secure; SameSite=None";
-}
-if (refreshToken) {
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
-  document.cookie =
-    "refreshToken=" +
-    accessToken +
-    "; expires=" +
-    expirationDate.toUTCString() +
-    "; path=/; HttpOnly; Secure; SameSite=None";
-}
-  },[accessToken, refreshToken])
+    if (refreshToken) {
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+      document.cookie =
+        "refreshToken=" +
+        refreshToken +
+        "; expires=" +
+        expirationDate.toUTCString() +
+        "; path=/; Secure; SameSite=None";
+    }
+  }, [accessToken, refreshToken]);
 
   
 
