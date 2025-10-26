@@ -25,8 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import NavBar from "@/app/components/Navbar";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import {useSearchParams} from "react-router-dom"
-
+import { useSearchParams } from "next/navigation";
 
 export default function HomePage() {
   // will either hardcode or fetch these stats from backend later will see
@@ -72,42 +71,43 @@ export default function HomePage() {
     },
   ];
 
-//   const params = useParams();
-//   let accessToken = params.accessToken;
-//   let refreshToken = params.refreshToken;
-//   useEffect(() => {
-//     refreshToken = params.refreshToken
-//     accessToken = params.accessToken
-//   }, [params])
+  //   const params = useParams();
+  //   let accessToken = params.accessToken;
+  //   let refreshToken = params.refreshToken;
+  //   useEffect(() => {
+  //     refreshToken = params.refreshToken
+  //     accessToken = params.accessToken
+  //   }, [params])
 
-
-
-//   useEffect(() => {
-// if (accessToken) {
-//   const expirationDate = new Date();
-//   expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
-//   document.cookie =
-//     "accessToken=" +
-//     accessToken +
-//     "; expires=" +
-//     expirationDate.toUTCString() +
-//     "; path=/; HttpOnly; Secure; SameSite=None";
-// }
-// if (refreshToken) {
-//   const expirationDate = new Date();
-//   expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
-//   document.cookie =
-//     "refreshToken=" +
-//     accessToken +
-//     "; expires=" +
-//     expirationDate.toUTCString() +
-//     "; path=/; HttpOnly; Secure; SameSite=None";
-// }
+  //   useEffect(() => {
+  // if (accessToken) {
+  //   const expirationDate = new Date();
+  //   expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
+  //   document.cookie =
+  //     "accessToken=" +
+  //     accessToken +
+  //     "; expires=" +
+  //     expirationDate.toUTCString() +
+  //     "; path=/; HttpOnly; Secure; SameSite=None";
+  // }
+  // if (refreshToken) {
+  //   const expirationDate = new Date();
+  //   expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
+  //   document.cookie =
+  //     "refreshToken=" +
+  //     accessToken +
+  //     "; expires=" +
+  //     expirationDate.toUTCString() +
+  //     "; path=/; HttpOnly; Secure; SameSite=None";
+  // }
   //   },[accessToken, refreshToken])
-  
-  const params = useParams()
-  const accessToken = params.accessToken
-  const refreshToken = params.refreshToken;
+
+  const params = useSearchParams();
+  const accessToken = params.get("accessToken");
+  const refreshToken = params.get("refreshToken");
+
+  console.log("This is the accessToken: ", accessToken);
+  console.log("This is the refreshToken: ", refreshToken);
 
   useEffect(() => {
     if (accessToken) {
@@ -131,9 +131,10 @@ export default function HomePage() {
         expirationDate.toUTCString() +
         "; path=/; Secure; SameSite=None";
     }
-  }, [accessToken, refreshToken]);
 
-  
+    console.log("This is the accessToken: (from useEffect)", accessToken);
+    console.log("This is the refreshToken: (from useEffect)", refreshToken);
+  }, [accessToken, refreshToken]);
 
   return (
     <>
