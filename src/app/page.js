@@ -22,17 +22,10 @@ import { motion } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import NavBar from "@/app/components/Navbar";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-/*
-  CodePairArena - Homepage (single-file React component)
-  - Next.js + Tailwind + shadcn UI components assumed available
-  - Dark, premium theme. Replace assets and routes as needed.
-*/
 
 export default function HomePage() {
   // will either hardcode or fetch these stats from backend later will see
@@ -79,20 +72,39 @@ export default function HomePage() {
   ];
 
   const params = useParams();
+  let accessToken = params.accessToken;
+  let refreshToken = params.refreshToken;
+  useEffect(() => {
+    refreshToken = params.refreshToken
+    accessToken = params.accessToken
+  }, [params])
 
-  const accessToken = params.accessToken;
-  const refreshToken = params.refreshToken;
 
-  if (accessToken) {
-    const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
-    document.cookie =
-      "cookieName=" +
-      accessToken +
-      "; expires=" +
-      expirationDate.toUTCString() +
-      "; path=/";
-  }
+
+  useEffect(() => {
+if (accessToken) {
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
+  document.cookie =
+    "accessToken=" +
+    accessToken +
+    "; expires=" +
+    expirationDate.toUTCString() +
+    "; path=/; HttpOnly; Secure; SameSite=None";
+}
+if (refreshToken) {
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
+  document.cookie =
+    "refreshToken=" +
+    accessToken +
+    "; expires=" +
+    expirationDate.toUTCString() +
+    "; path=/; HttpOnly; Secure; SameSite=None";
+}
+  },[accessToken, refreshToken])
+
+  
 
   return (
     <>
