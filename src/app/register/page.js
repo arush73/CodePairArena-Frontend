@@ -52,10 +52,12 @@ export default function Register() {
   const handleSSO = async (name) => {
     // await SSOHandler(name);
     if (name === "github") {
+      toast("currently not working");
+      return;
     }
-    toast("currently not working");
-    return;
+    
     window.location.href = `https://leetclone-next-backend-production.up.railway.app/api/v1/auth/${name}`;
+
   };
 
   const {

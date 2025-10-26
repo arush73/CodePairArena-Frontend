@@ -15,7 +15,7 @@
 
 // export default Home;
 
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import NavBar from "@/app/components/Navbar";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 /*
   CodePairArena - Homepage (single-file React component)
@@ -34,9 +35,10 @@ import Link from "next/link";
 */
 
 export default function HomePage() {
-
   // will either hardcode or fetch these stats from backend later will see
-  const [sampleProblemId, setSampleProblemId] = React.useState("68ea43cb79dd88ec4e999b22");
+  const [sampleProblemId, setSampleProblemId] = React.useState(
+    "68ea43cb79dd88ec4e999b22"
+  );
   const stats = [
     { label: "Problems", value: "3.5k+" },
     { label: "Active Users", value: "120k+" },
@@ -75,6 +77,22 @@ export default function HomePage() {
       text: "The contest practice improved my speed & confidence massively.",
     },
   ];
+
+  const params = useParams();
+
+  const accessToken = params.accessToken;
+  const refreshToken = params.refreshToken;
+
+  if (accessToken) {
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7); // 7 days
+    document.cookie =
+      "cookieName=" +
+      accessToken +
+      "; expires=" +
+      expirationDate.toUTCString() +
+      "; path=/";
+  }
 
   return (
     <>
