@@ -15,6 +15,7 @@ import { LoaderFour } from "@/components/ui/loader";
 import Link from "next/link";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { baseUrl } from "@/lib/axios";
 
 const registerSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -55,7 +56,7 @@ export default function Register() {
       return;
     }
     
-    window.location.href = `https://presenting-ocean-jason-increases.trycloudflare.com/api/v1/auth/${name}`;
+    window.location.href = `${baseUrl}/auth/${name}`;
     // window.location.href = `http://localhost:8080/api/v1/auth/${name}`;
     
   };
