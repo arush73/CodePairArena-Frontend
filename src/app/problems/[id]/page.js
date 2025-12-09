@@ -247,7 +247,7 @@ const Page = () => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="start">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              {user? <> <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuGroup>
                 <Link href="/profile">
                   <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -270,7 +270,13 @@ const Page = () => {
               <DropdownMenuItem>Support</DropdownMenuItem>
               {/* <DropdownMenuItem disabled>API</DropdownMenuItem> */}
               <DropdownMenuSeparator />
-              {/* <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem> */}
+              {/* <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem> */}</>:<><DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <Link href="/login">
+                  <DropdownMenuItem>Login</DropdownMenuItem>
+                </Link>
+              </DropdownMenuGroup></>}
+             
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

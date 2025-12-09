@@ -104,11 +104,13 @@ export default function ProfilePage() {
   }
 
   if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Failed to load profile.</p>
-      </div>
-    );
+    // return (
+    //   <div className="min-h-screen flex items-center justify-center">
+    //     <p>Failed to load profile.</p>
+    //   </div>
+    // );
+    // router.back()
+    router.push("/problems")
   }
 
   // Helper to get initials
