@@ -55,7 +55,7 @@ export default function Register() {
       return;
     }
     
-    window.location.href = `https://leetclone-next-backend-production.up.railway.app/api/v1/auth/${name}`;
+    window.location.href = `https://presenting-ocean-jason-increases.trycloudflare.com/api/v1/auth/${name}`;
     // window.location.href = `http://localhost:8080/api/v1/auth/${name}`;
     
   };
